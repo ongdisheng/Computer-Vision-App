@@ -65,7 +65,7 @@ const Navbar = ({ user, handleLogout }) => {
                   src={'https://bit.ly/ryan-florence'}
                 />
               </MenuButton>
-              <MenuList alignItems={'center'}>
+              <MenuList alignItems={'center'} zIndex={999}>
                 <br />
                 <Center>
                   <Avatar

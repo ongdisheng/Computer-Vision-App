@@ -2,8 +2,13 @@
 import { useRef, useEffect } from "react"
 import * as tf from "@tensorflow/tfjs"
 import * as coco from "@tensorflow-models/coco-ssd"
-import Webcam from "react-webcam"
+import Webcam from "./Webcam"
+import Canvas from "./Canvas"
 import { drawRect } from "../utility"
+import {
+  Flex,
+  Box
+} from '@chakra-ui/react'
 
 const ObjDetect = () => {
   const webcamRef = useRef(null)
@@ -17,7 +22,7 @@ const ObjDetect = () => {
     // detect objects in given frames (loop) 
     setInterval(() => {
       detect(net)
-    }, 10)
+    }, 100)
   }
 
   const detect = async (net) => {
@@ -57,38 +62,12 @@ const ObjDetect = () => {
 
   return (
     <div>
-      <header>
-        <Webcam
-          ref={webcamRef}
-          muted={true} 
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
-
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 8,
-            width: 640,
-            height: 480,
-          }}
-        />
-      </header>
+      <Flex direction="column" marginTop="150px" minHeight="542px">
+        <Box>
+          <Webcam ref={webcamRef} />
+          <Canvas ref={canvasRef} />      
+        </Box>  
+      </Flex>
     </div>
   )
 }

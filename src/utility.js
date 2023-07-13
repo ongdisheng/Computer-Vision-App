@@ -8,13 +8,14 @@ export const drawRect = (preds, ctx) => {
     const predClass = pred.class
 
     // set style
-    ctx.font = '18px Arial'
+    ctx.font = 'bold 18px Arial'
     ctx.fillStyle = 'green'
     ctx.strokeStyle = 'green'
+    ctx.lineWidth = 3
 
     // draw rectangle and text
     ctx.beginPath()
-    ctx.fillText(predClass, x, y)
+    ctx.fillText(predClass, x, y - 5)
     ctx.rect(x, y, width, height)
     ctx.stroke()
   })
