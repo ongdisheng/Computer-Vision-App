@@ -4,13 +4,15 @@ import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
 import { useEffect, useState } from 'react'
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   useNavigate
 } from 'react-router-dom'
+import { useToast } from '@chakra-ui/react'
 
 const App = () => {
+  const navigate = useNavigate()
+  const toast = useToast()
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -26,6 +28,8 @@ const App = () => {
     const username = event.target.username.value
     window.localStorage.setItem('user', JSON.stringify({ username }))
     setUser({ username })
+    addToast()
+    navigate('/')
   }
 
   // event handler for logout
@@ -34,18 +38,27 @@ const App = () => {
     setUser(null)
   }
 
-  return (
-    <Router>
-      <div>
-        <NavBar user={user} handleLogout={handleLogout} />
+  // add a toast message upon successful login
+  const addToast = () => {
+    toast({
+      title: 'Login Successfully',
+      position: 'top',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    })
+  }
 
-        <Routes>
-          <Route path='/' element={<Hero />} />
-          <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+  return (   
+    <div>
+      <NavBar user={user} handleLogout={handleLogout} />
+
+      <Routes>
+        <Route path='/' element={<Hero />} />
+        <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
+      </Routes>
+      <Footer />
+    </div>
   )
 }
 

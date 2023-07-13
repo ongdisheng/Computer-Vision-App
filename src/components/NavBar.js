@@ -45,7 +45,7 @@ const Navbar = ({ user, handleLogout }) => {
       <Spacer />
       <Box>
         <Menu>
-          <Button onClick={toggleColorMode}>
+          <Button onClick={toggleColorMode} bg={'purple.500'}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
           {
