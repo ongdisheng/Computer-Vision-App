@@ -58,7 +58,7 @@ const Navbar = ({ user }) => {
                 cursor={'pointer'}
                 minW={0}>
                 <Avatar
-                  size={'md'}
+                  size={'sm'}
                   src={'https://bit.ly/ryan-florence'}
                 />
               </MenuButton>
@@ -72,12 +72,12 @@ const Navbar = ({ user }) => {
                 </Center>
                 <br />
                 <Center>
-                  <p>Ryan Florence</p>
+                  <p>{user.username}</p>
                 </Center>
                 <br />
                 <MenuDivider />
-                <MenuItem>Your Servers</MenuItem>
                 <MenuItem>Account Settings</MenuItem>
+                <MenuItem>Billing</MenuItem>
                 <MenuItem>Logout</MenuItem>
               </MenuList>
             </>

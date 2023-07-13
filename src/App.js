@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  useNavigate
 } from 'react-router-dom'
 
 const App = () => {
@@ -19,6 +20,16 @@ const App = () => {
     }
   })
 
+  // event handler for login form
+  const handleLogin = event => {
+    event.preventDefault()
+    const username = event.target.username.value
+    window.localStorage.setItem('user', JSON.stringify({ username }))
+    setUser({ username })
+  }
+
+  // event handler for logout
+
   return (
     <Router>
       <div>
@@ -26,7 +37,7 @@ const App = () => {
 
         <Routes>
           <Route path='/' element={<Hero />} />
-          <Route path='/login' element={<LoginForm />} />
+          <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
         </Routes>
         <Footer />
       </div>

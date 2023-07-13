@@ -12,7 +12,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
   
-const LoginForm = () => {
+const LoginForm = ({ handleLogin }) => {
   return (
     <Flex
       align={'center'}
@@ -33,26 +33,29 @@ const LoginForm = () => {
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}>
-          <Stack spacing={4}>
-            <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel>Password</FormLabel>
-              <Input type="password" />
-            </FormControl>
-            <Stack spacing={100}>
-              <Button
-                bg={'blue.400'}
-                color={'white'}
-                _hover={{
-                bg: 'blue.500',
-              }}>
-                Sign in
-              </Button>
-            </Stack>
-          </Stack>
+            <form onSubmit={handleLogin}>
+              <Stack spacing={4}>
+                <FormControl id="username">
+                  <FormLabel>Username</FormLabel>
+                  <Input name="username" type="text" />
+                </FormControl>
+                <FormControl id="password">
+                  <FormLabel>Password</FormLabel>
+                  <Input name="password" type="password" />
+                </FormControl>
+                <Stack spacing={100}>
+                  <Button
+                    bg={'blue.400'}
+                    color={'white'}
+                    type="submit"
+                    _hover={{
+                    bg: 'blue.500',
+                  }}>
+                    Sign in
+                  </Button>
+                </Stack>
+              </Stack>
+            </form>
         </Box>
       </Stack>
     </Flex>
