@@ -18,7 +18,7 @@ import {
 
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
-const Navbar = ({ user }) => {
+const Navbar = ({ user, handleLogout }) => {
   // light and dark mode
   const { colorMode, toggleColorMode } = useColorMode()
 
@@ -78,7 +78,7 @@ const Navbar = ({ user }) => {
                 <MenuDivider />
                 <MenuItem>Account Settings</MenuItem>
                 <MenuItem>Billing</MenuItem>
-                <MenuItem>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </>
           }

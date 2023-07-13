@@ -29,11 +29,15 @@ const App = () => {
   }
 
   // event handler for logout
+  const handleLogout = () => {
+    window.localStorage.removeItem('user')
+    setUser(null)
+  }
 
   return (
     <Router>
       <div>
-        <NavBar user={user} />
+        <NavBar user={user} handleLogout={handleLogout} />
 
         <Routes>
           <Route path='/' element={<Hero />} />
