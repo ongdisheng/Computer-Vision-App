@@ -2,11 +2,13 @@ import NavBar from './components/NavBar'
 import Hero from './components/Hero'
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
+import Canvas from './components/Canvas'
 import { useEffect, useState } from 'react'
 import {
   Routes,
   Route,
-  useNavigate
+  useNavigate,
+  Navigate
 } from 'react-router-dom'
 import { useToast } from '@chakra-ui/react'
 
@@ -20,7 +22,7 @@ const App = () => {
     if (user) {
       setUser(JSON.parse(user))
     }
-  })
+  }, [])
 
   // event handler for login form
   const handleLogin = event => {
@@ -28,7 +30,7 @@ const App = () => {
     const username = event.target.username.value
     window.localStorage.setItem('user', JSON.stringify({ username }))
     setUser({ username })
-    addToast()
+    addToast('Login')
     navigate('/')
   }
 
@@ -36,12 +38,14 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('user')
     setUser(null)
+    addToast('Logout')
+    navigate('/')
   }
 
   // add a toast message upon successful login
-  const addToast = () => {
+  const addToast = (message) => {
     toast({
-      title: 'Login Successfully',
+      title: `${message} Successfully`,
       position: 'top',
       status: 'success',
       duration: 5000,
@@ -56,6 +60,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Hero />} />
         <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
+        <Route path='/canvas' element={user ? <Canvas /> : <Navigate replace to='/login' />} />
       </Routes>
       <Footer />
     </div>

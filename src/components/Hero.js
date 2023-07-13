@@ -6,8 +6,10 @@ import {
   Button,
   Flex,
   Box,
-  Image
+  Image,
 } from '@chakra-ui/react'
+
+import { NavLink } from 'react-router-dom'
 
 const Hero = () => {
   return (
@@ -38,11 +40,11 @@ const Hero = () => {
                 zIndex: -1,
               }}
             >
-              Write once,
+              Real Time
             </Text>
             <br />
             <Text as={'span'} color={'pink.400'}>
-              use everywhere!
+              AI Detection
             </Text>
           </Heading>
           <Text color={'gray.500'}>
@@ -57,11 +59,13 @@ const Hero = () => {
             <Button
               rounded={'full'}
               size={'lg'}
-              fontWeight={'normal'}
+              fontWeight={'bold'}
               px={10}
               colorScheme={'pink'}
               bg={'pink.400'}
-              _hover={{ bg: 'pink.500' }}
+              as={NavLink}
+              to={'/canvas'}
+              _hover={{ bg: 'pink.500', textDecoration: 'none' }}
             >
               Get Started
             </Button>

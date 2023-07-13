@@ -16,6 +16,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 
+import { NavLink } from 'react-router-dom'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
 const Navbar = ({ user, handleLogout }) => {
@@ -37,9 +38,10 @@ const Navbar = ({ user, handleLogout }) => {
             textDecoration: 'none',
             bg: useColorModeValue('gray.400', 'gray.500'),
           }}
-          href={'/'}
+          as={NavLink}
+          to={'/'}
         >
-          📸 Real Time Object Detection
+          📸 Computer Vision
         </Link>
       </Box>
       <Spacer />
@@ -52,6 +54,7 @@ const Navbar = ({ user, handleLogout }) => {
             user &&
             <>
               <MenuButton
+                marginLeft={1}
                 as={Button}
                 rounded={'full'}
                 variant={'link'}
@@ -86,13 +89,13 @@ const Navbar = ({ user, handleLogout }) => {
             !user &&
             <>
               <Button
-                as={'a'}
+                as={NavLink}
+                to={'/login'}
                 display={{ base: 'none', md: 'inline-flex' }}
                 fontSize={'sm'}
                 fontWeight={600}
                 color={'white'}
                 bg={'blue.400'}
-                href={'/login'}
                 _hover={{
                   bg: 'blue.300',
                 }}>
