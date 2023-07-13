@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
 import ObjDetect from './components/ObjDetect'
+import HandDetect from './components/HandDetect'
 import Products from './components/Products'
 import { useEffect, useState } from 'react'
 import {
@@ -62,6 +63,7 @@ const App = () => {
         <Route path='/' element={<Hero />} />
         <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
         <Route path='/obj' element={user ? <ObjDetect /> : <Navigate replace to='/login' />} />
+        <Route path='/hand' element={user ? <HandDetect /> : <Navigate replace to='/login' />} />
         <Route path='/products' element={<Products />} />
       </Routes>
 

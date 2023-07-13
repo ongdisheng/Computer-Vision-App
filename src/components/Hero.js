@@ -17,7 +17,7 @@ const Hero = () => {
       <Stack
         align={'center'}
         spacing={{ base: 8, md: 10 }}
-        py={'180'}
+        py={'168'}
         direction={{ base: 'column', md: 'row' }}
       >
         <Stack flex={1} spacing={{ base: 5, md: 10 }}>
@@ -48,9 +48,9 @@ const Hero = () => {
             </Text>
           </Heading>
           <Text color={'gray.500'}>
-            Snippy is a rich coding snippets app that lets you create your own
-            code snippets, categorize them, and even sync them in the cloud so
-            you can use them anywhere. All that is free!
+            Embark on a Journey of Real-Time Computer Vision using AI. 
+            Experience the remarkable capabilities of our cutting-edge AI technology, enabling you to analyze and understand the world in real-time. 
+            Explore the realm of computer vision and unlock the potential for intelligent insights and automated decision-making.
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}

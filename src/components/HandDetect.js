@@ -1,28 +1,31 @@
-// import dependencies
 import { useRef, useEffect } from "react"
 import * as tf from "@tensorflow/tfjs"
-import * as coco from "@tensorflow-models/coco-ssd"
+import * as handPoseDetection from "@tensorflow-models/hand-pose-detection"
 import Webcam from "./Webcam"
 import Canvas from "./Canvas"
-import { drawRect } from "../utility"
 import {
   Flex,
   Box,
   Button
 } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom"
+import { drawHand } from "../utility"
 
-const ObjDetect = () => {
+const HandDetect = () => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   const navigate = useNavigate()
 
   // main function
-  const runCoco = async () => {
+  const runHand = async () => {
     // load network
-    const net = await coco.load()
+    const model = handPoseDetection.SupportedModels.MediaPipeHands
+    const detectorConfig = {
+      runtime: 'tfjs',
+    }
+    const net = await handPoseDetection.createDetector(model, detectorConfig)
 
-    // detect objects in given frames (loop) 
+    // detect hands in given frames (loop) 
     setInterval(() => {
       detect(net)
     }, 100)
@@ -48,19 +51,22 @@ const ObjDetect = () => {
       canvasRef.current.width = videoWidth
       canvasRef.current.height = videoHeight
 
-      // model predictions
-      const preds = await net.detect(video)
+      // hand detections
+      const estimationConfig = {flipHorizontal: false}
+      const hands = await net.estimateHands(video, estimationConfig)
 
       // draw mesh
-      const ctx = canvasRef.current.getContext("2d")
+      if (canvasRef.current != null) {
+        const ctx = canvasRef.current.getContext("2d")
 
-      // draw bounding rectangles
-      drawRect(preds, ctx)
+        // draw hand skeleton
+        drawHand(hands, ctx)
+      }
     }
   }
 
   useEffect(() => {
-    runCoco()
+    runHand()
   }, [])
 
   return (
@@ -95,4 +101,4 @@ const ObjDetect = () => {
   )
 }
 
-export default ObjDetect
+export default HandDetect
