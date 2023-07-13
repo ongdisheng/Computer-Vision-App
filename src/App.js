@@ -1,5 +1,6 @@
 import NavBar from './components/NavBar'
 import Hero from './components/Hero'
+import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
 import { useEffect, useState } from 'react'
 import {
@@ -22,7 +23,11 @@ const App = () => {
     <Router>
       <div>
         <NavBar user={user} />
-        <Hero />
+
+        <Routes>
+          <Route path='/' element={<Hero />} />
+          <Route path='/login' element={<LoginForm />} />
+        </Routes>
         <Footer />
       </div>
     </Router>

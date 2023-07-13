@@ -37,7 +37,7 @@ const Navbar = ({ user }) => {
             textDecoration: 'none',
             bg: useColorModeValue('gray.400', 'gray.500'),
           }}
-          href={'#'}
+          href={'/'}
         >
           📸 Real Time Object Detection
         </Link>
