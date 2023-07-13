@@ -36,7 +36,7 @@ const Navbar = ({ user, handleLogout }) => {
           letterSpacing="wide"
           _hover={{
             textDecoration: 'none',
-            bg: useColorModeValue('gray.400', 'gray.500'),
+            bg: useColorModeValue('gray.400', 'gray.400'),
           }}
           as={NavLink}
           to={'/'}

@@ -64,7 +64,7 @@ const Hero = () => {
               colorScheme={'pink'}
               bg={'pink.400'}
               as={NavLink}
-              to={'/canvas'}
+              to={'/products'}
               _hover={{ bg: 'pink.500', textDecoration: 'none' }}
             >
               Get Started

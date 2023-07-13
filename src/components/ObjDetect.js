@@ -5,7 +5,7 @@ import * as coco from "@tensorflow-models/coco-ssd"
 import Webcam from "react-webcam"
 import { drawRect } from "../utility"
 
-const Canvas = () => {
+const ObjDetect = () => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
 
@@ -51,7 +51,9 @@ const Canvas = () => {
     }
   }
 
-  useEffect(()=>{runCoco()},[]);
+  useEffect(() => {
+    runCoco()
+  }, [])
 
   return (
     <div>
@@ -91,4 +93,4 @@ const Canvas = () => {
   )
 }
 
-export default Canvas
+export default ObjDetect

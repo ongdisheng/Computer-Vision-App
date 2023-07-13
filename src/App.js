@@ -2,7 +2,8 @@ import NavBar from './components/NavBar'
 import Hero from './components/Hero'
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
-import Canvas from './components/Canvas'
+import ObjDetect from './components/ObjDetect'
+import Products from './components/Products'
 import { useEffect, useState } from 'react'
 import {
   Routes,
@@ -31,7 +32,7 @@ const App = () => {
     window.localStorage.setItem('user', JSON.stringify({ username }))
     setUser({ username })
     addToast('Login')
-    navigate('/')
+    navigate(-1)
   }
 
   // event handler for logout
@@ -60,8 +61,10 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Hero />} />
         <Route path='/login' element={<LoginForm handleLogin={handleLogin} />} />
-        <Route path='/canvas' element={user ? <Canvas /> : <Navigate replace to='/login' />} />
+        <Route path='/obj' element={user ? <ObjDetect /> : <Navigate replace to='/login' />} />
+        <Route path='/products' element={<Products />} />
       </Routes>
+
       <Footer />
     </div>
   )
