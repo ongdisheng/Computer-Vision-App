@@ -1,3 +1,6 @@
+import * as posenet from "@tensorflow-models/posenet"
+import * as tf from "@tensorflow/tfjs"
+
 // draw bounding rectangles enclosing detected objects
 export const drawRect = (preds, ctx) => {
   // loop through each prediction
@@ -62,7 +65,7 @@ export const drawHand = (hands, ctx) => {
         }
       }
 
-      // draw poins on joints
+      // draw points on joints
       for (let i = 0; i < keypoints.length; i++) {
         // retrieve x coordinate
         const x = keypoints[i].x
@@ -79,5 +82,66 @@ export const drawHand = (hands, ctx) => {
         ctx.fill()
       }
     })
+  }
+}
+
+const bodyJoints = {
+  head: [3, 1, 0, 2, 4],
+  rightHand: [6, 8, 10],
+  leftHand: [5, 7, 9],
+  shoulder: [6, 5],
+  leftShoulderHip: [6, 12],
+  rightShoulderHip: [5, 11],
+  hip: [12, 11],
+  rightLeg: [12, 14, 16],
+  leftLeg: [11, 13, 15]
+}
+
+export const drawBody = (keypoints, ctx) => {
+  // draw points
+  for (let i = 0; i < keypoints.length; i++) {
+    // retrieve x and y coordinate
+    const { x, y } = keypoints[i].position
+    
+    if (keypoints[i].score < 0.7) {
+      continue
+    } 
+
+    // start drawing
+    ctx.beginPath()
+    ctx.arc(x, y, 5, 0, 3 * Math.PI)
+
+    // set point color
+    ctx.fillStyle = 'red'
+    ctx.fill()
+  }
+
+  // draw body lines
+  for (let i = 0; i < Object.keys(bodyJoints).length; i++) {
+    let bodyPart = Object.keys(bodyJoints)[i]
+    //  loop through pairs of body
+    for (let j = 0; j < bodyJoints[bodyPart].length - 1; j++) {
+      // retrieve pairs of joints
+      const firstJointIndex = bodyJoints[bodyPart][j]
+      const secondJointIndex = bodyJoints[bodyPart][j + 1]
+
+      if (keypoints[firstJointIndex].score < 0.7 || keypoints[secondJointIndex].score < 0.7) {
+        continue
+      }
+
+      // draw path
+      ctx.beginPath()
+      ctx.moveTo(
+        keypoints[firstJointIndex].position.x,
+        keypoints[firstJointIndex].position.y
+      )
+      ctx.lineTo(
+        keypoints[secondJointIndex].position.x,
+        keypoints[secondJointIndex].position.y
+      )
+      ctx.strokeStyle = "chartreuse"
+      ctx.lineWidth = 4
+      ctx.stroke()
+    }
   }
 }

@@ -11,8 +11,18 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
   
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = ({ handleLogin, addToast }) => {
+  const { state } = useLocation()
+
+  useEffect(() => {
+    if (state) {
+      addToast('Looks like you have not login yet')
+    }
+  }, [])
+
   return (
     <Flex
       align={'center'}

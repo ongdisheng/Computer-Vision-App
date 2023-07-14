@@ -8,11 +8,11 @@ import { drawRect } from "../utility"
 import {
   Flex,
   Box,
-  Button
+  Button,
 } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom"
 
-const ObjDetect = () => {
+const ObjDetect = ({ addToast }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   const navigate = useNavigate()
@@ -61,6 +61,7 @@ const ObjDetect = () => {
 
   useEffect(() => {
     runCoco()
+    addToast('Hang on tight while we are loading the model')
   }, [])
 
   return (

@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react"
 import * as tf from "@tensorflow/tfjs"
-import * as handPoseDetection from "@tensorflow-models/hand-pose-detection"
+import * as posenet from "@tensorflow-models/posenet"
 import Webcam from "./Webcam"
 import Canvas from "./Canvas"
 import {
@@ -9,21 +9,23 @@ import {
   Button
 } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom"
-import { drawHand } from "../utility"
+import { drawBody } from "../utility"
 
-const HandDetect = ({ addToast }) => {
+const BodyDetect = ({ addToast }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   const navigate = useNavigate()
 
   // main function
-  const runHand = async () => {
+  const runBody = async () => {
     // load network
-    const model = handPoseDetection.SupportedModels.MediaPipeHands
     const detectorConfig = {
-      runtime: 'tfjs',
+      architecture: 'MobileNetV1',
+      outputStride: 16,
+      inputResolution: { width: 640, height: 480 },
+      multiplier: 0.75
     }
-    const net = await handPoseDetection.createDetector(model, detectorConfig)
+    const net = await posenet.load(detectorConfig)
 
     // detect hands in given frames (loop) 
     setInterval(() => {
@@ -51,22 +53,27 @@ const HandDetect = ({ addToast }) => {
       canvasRef.current.width = videoWidth
       canvasRef.current.height = videoHeight
 
-      // hand detections
-      const estimationConfig = {flipHorizontal: false}
-      const hands = await net.estimateHands(video, estimationConfig)
+      // body pose detections
+      const estimationConfig = {
+        maxPoses: 5,
+        flipHorizontal: false,
+        scoreThreshold: 0.5,
+        nmsRadius: 20
+      }
+      const poses = await net.estimateSinglePose(video, estimationConfig)
 
       // draw mesh
       if (canvasRef.current != null) {
         const ctx = canvasRef.current.getContext("2d")
 
-        // draw hand skeleton
-        drawHand(hands, ctx)
+        // draw body skeleton
+        drawBody(poses.keypoints, ctx)
       }
     }
   }
 
   useEffect(() => {
-    runHand()
+    runBody()
     addToast('Hang on tight while we are loading the model')
   }, [])
 
@@ -102,4 +109,5 @@ const HandDetect = ({ addToast }) => {
   )
 }
 
-export default HandDetect
+
+export default BodyDetect
